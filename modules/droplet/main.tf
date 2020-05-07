@@ -50,13 +50,14 @@ resource "digitalocean_droplet" "droplet" {
   tags               = compact(concat(var.tags, digitalocean_tag.default_tag.*.name, list("")))
   user_data          = var.user_data
 }
-// Block storage
-resource "digitalocean_volume" "volume" {
-  count = var.block_storage_size > 0 ? coalesce(var.block_storage_count, var.droplet_count) : 0
+// Block storage1
+resource "digitalocean_volume" "volume1" {
+  count = var.block_storage_size1 > 0 ? coalesce(var.block_storage_count, var.droplet_count) : 0
 
   region = var.region
-  name   = coalesce(var.block_storage_name, element(digitalocean_droplet.droplet.*.name, count.index))
-  size   = var.block_storage_size
+  #name   = coalesce(var.block_storage_name, element(digitalocean_droplet.droplet.*.name, count.index))
+  name   = "${digitalocean_droplet.droplet.*.name[count.index]}-vol1"
+  size   = var.block_storage_size1
 
   // Optional
   description              = "Block storage for ${element(digitalocean_droplet.droplet.*.name, count.index)}"
@@ -65,11 +66,55 @@ resource "digitalocean_volume" "volume" {
 }
 
 // Attach volumes
-resource "digitalocean_volume_attachment" "volume_attachment" {
-  count = var.block_storage_size > 0 && var.block_storage_attach == true ? coalesce(var.block_storage_count, var.droplet_count) : 0
+resource "digitalocean_volume_attachment" "volume_attachment1" {
+  count = var.block_storage_size1 > 0 && var.block_storage_attach == true ? coalesce(var.block_storage_count, var.droplet_count) : 0
 
   droplet_id = element(digitalocean_droplet.droplet.*.id, count.index)
-  volume_id  = element(digitalocean_volume.volume.*.id, count.index)
+  volume_id  = element(digitalocean_volume.volume1.*.id, count.index)
+}
+
+// Block storage2
+resource "digitalocean_volume" "volume2" {
+  count = var.block_storage_size2 > 0 ? coalesce(var.block_storage_count, var.droplet_count) : 0
+
+  region = var.region
+  name   = "${digitalocean_droplet.droplet.*.name[count.index]}-vol2"
+  size   = var.block_storage_size2
+
+  // Optional
+  description              = "Block storage for ${element(digitalocean_droplet.droplet.*.name, count.index)}"
+  initial_filesystem_label = var.block_storage_filesystem_label
+  initial_filesystem_type  = var.block_storage_filesystem_type
+}
+
+// Attach volumes
+resource "digitalocean_volume_attachment" "volume_attachment2" {
+  count = var.block_storage_size2 > 0 && var.block_storage_attach == true ? coalesce(var.block_storage_count, var.droplet_count) : 0
+
+  droplet_id = element(digitalocean_droplet.droplet.*.id, count.index)
+  volume_id  = element(digitalocean_volume.volume2.*.id, count.index)
+}
+
+// Block storage3
+resource "digitalocean_volume" "volume3" {
+  count = var.block_storage_size3 > 0 ? coalesce(var.block_storage_count, var.droplet_count) : 0
+
+  region = var.region
+  name   = "${digitalocean_droplet.droplet.*.name[count.index]}-vol3"
+  size   = var.block_storage_size3
+
+  // Optional
+  description              = "Block storage for ${element(digitalocean_droplet.droplet.*.name, count.index)}"
+  initial_filesystem_label = var.block_storage_filesystem_label
+  initial_filesystem_type  = var.block_storage_filesystem_type
+}
+
+// Attach volumes
+resource "digitalocean_volume_attachment" "volume_attachment3" {
+  count = var.block_storage_size3 > 0 && var.block_storage_attach == true ? coalesce(var.block_storage_count, var.droplet_count) : 0
+
+  droplet_id = element(digitalocean_droplet.droplet.*.id, count.index)
+  volume_id  = element(digitalocean_volume.volume3.*.id, count.index)
 }
 
 // Floating IP

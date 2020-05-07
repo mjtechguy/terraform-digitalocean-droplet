@@ -28,7 +28,17 @@ variable "block_storage_name" {
   default     = ""
 }
 
-variable "block_storage_size" {
+variable "block_storage_size1" {
+  description = "(Required) The size of the block storage volume in GiB. If updated, can only be expanded."
+  default     = 0
+}
+
+variable "block_storage_size2" {
+  description = "(Required) The size of the block storage volume in GiB. If updated, can only be expanded."
+  default     = 0
+}
+
+variable "block_storage_size3" {
   description = "(Required) The size of the block storage volume in GiB. If updated, can only be expanded."
   default     = 0
 }

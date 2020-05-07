@@ -20,10 +20,10 @@ locals {
   private_a              = "${compact(concat(digitalocean_record.private_a.*.fqdn, list("")))}"
   public_a               = "${compact(concat(digitalocean_record.public_a.*.fqdn, list("")))}"
   public_aaaa            = "${compact(concat(digitalocean_record.public_aaaa.*.fqdn, list("")))}"
-  volume_id              = "${compact(concat(digitalocean_volume.volume.*.id, list("")))}"
-  volume_filesystem_type = "${compact(concat(digitalocean_volume.volume.*.initial_filesystem_type, list("")))}"
-  volume_droplet_ids     = "${compact(concat(flatten(digitalocean_volume.volume.*.droplet_ids), list("")))}"
-  volume_attachment_id   = "${compact(concat(digitalocean_volume_attachment.volume_attachment.*.id, list("")))}"
+  volume_id              = "${compact(concat(digitalocean_volume.volume1.*.id, list("")))}"
+  volume_filesystem_type = "${compact(concat(digitalocean_volume.volume1.*.initial_filesystem_type, list("")))}"
+  volume_droplet_ids     = "${compact(concat(flatten(digitalocean_volume.volume1.*.droplet_ids), list("")))}"
+  volume_attachment_id   = "${compact(concat(digitalocean_volume_attachment.volume_attachment1.*.id, list("")))}"
 }
 
 output "droplet_id" {

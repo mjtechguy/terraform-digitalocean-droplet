@@ -2,5 +2,3 @@
 
 runcmd:
   - apt-get update
-  # - apt install -y nginx
-  # - 'echo "<html><body><h2>$(hostname)</h2></body></html>" > /var/www/html/index.html'
